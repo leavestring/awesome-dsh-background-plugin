@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.1.8] - 2026-08-14
+
+### Changed
+- Removed the decorative "/2025" year from the settings preview card kicker
+  ("PERSONAL SPACE / 2025" → "PERSONAL SPACE").
+
 ## [0.1.7] - 2026-08-14
 
 ### Fixed

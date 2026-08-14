@@ -88,7 +88,7 @@ pnpm pack --pack-destination .
 **第 2 步：安装到 DSH profile** —— 装进你的 DSH 配置：
 
 ```bash
-dsh plugin --profile web add ./awesome-dsh-background-plugin-0.1.7.tgz
+dsh plugin --profile web add ./awesome-dsh-background-plugin-0.1.8.tgz
 ```
 
 **第 3 步：暴露命名空间（重要，仅首次需要）**

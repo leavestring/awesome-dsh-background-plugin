@@ -88,7 +88,7 @@ pnpm pack --pack-destination .
 **Step 2: Install into a DSH profile**:
 
 ```bash
-dsh plugin --profile web add ./awesome-dsh-background-plugin-0.1.7.tgz
+dsh plugin --profile web add ./awesome-dsh-background-plugin-0.1.8.tgz
 ```
 
 **Step 3: Expose the settings namespace (required, first install only)**
