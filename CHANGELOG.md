@@ -2,6 +2,15 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.1.7] - 2026-08-14
+
+### Fixed
+- The active-background stacking rule no longer forces `position: relative;
+  z-index: 1` onto every sibling of the background layer. It now targets only
+  `#root` / `#app`, so DSH floating menus rendered through `createPortal` into
+  `<body>` (e.g. the message "more" menu) keep their fixed positioning and stay
+  clickable while a background is active.
+
 ## [0.1.6] - 2026-08-14
 
 ### Fixed
