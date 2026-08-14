@@ -39,7 +39,7 @@ pnpm pack --pack-destination .
 ### 2. Install into a DSH profile
 
 ```bash
-dsh plugin --profile web add ./dsh-background-plugin-0.1.6.tgz
+dsh plugin --profile web add ./dsh-background-plugin-0.1.7.tgz
 ```
 
 ### 3. Expose the settings namespace (required, first install only)

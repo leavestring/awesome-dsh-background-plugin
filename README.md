@@ -39,7 +39,7 @@ pnpm pack --pack-destination .
 ### 2. 安装到 DSH profile
 
 ```bash
-dsh plugin --profile web add ./dsh-background-plugin-0.1.6.tgz
+dsh plugin --profile web add ./dsh-background-plugin-0.1.7.tgz
 ```
 
 ### 3. 暴露命名空间（重要，仅首次需要）
