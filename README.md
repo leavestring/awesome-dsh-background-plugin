@@ -41,6 +41,10 @@ DSH Web 默认只有一套主题色背景。如果你和我一样，希望自己
 
 ![暗色模式自定义背景](screenshots/dark-mode-image.png)
 
+浅色模式 + 自定义图片背景：
+
+![浅色模式自定义背景](screenshots/light-mode-image.png)
+
 ## 安装
 
 ### ⚡ 一键安装（推荐，小白友好）

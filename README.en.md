@@ -41,6 +41,10 @@ Dark mode with a custom image background:
 
 ![Dark mode custom background](screenshots/dark-mode-image.png)
 
+Light mode with a custom image background:
+
+![Light mode custom background](screenshots/light-mode-image.png)
+
 ## Installation
 
 ### ⚡ One-command install (recommended, beginner friendly)
