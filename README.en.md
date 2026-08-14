@@ -6,15 +6,30 @@
 
 ---
 
+## Why this plugin?
+
+DSH Web ships with a single theme-colored background. If — like us — you want your workspace to feel **yours** instead of looking like everyone else's, you've probably already tried:
+
+- **Editing theme files / CSS directly** — doesn't survive updates. DSH is plugin-architecture driven and its theme is built on CSS variables; any update overwrites your edits.
+- **Userscripts or browser extensions** — invasive, selector-heavy, and needs to track every DSH release.
+- **Just living with it** — staring at a flat monochrome surface all day is tiring and impersonal.
+
+This plugin turns "background" into a **first-class setting item** using DSH's official Cordis plugin mechanism — and solves the three hardest problems along the way:
+
+1. **Saves silently rejected** — DSH's host only lets *allowlisted* settings namespaces be read and written by the browser, otherwise saving rolls back. The plugin ships `scripts/expose-namespace.mjs` to add `ui-background` to the allowlist with one command.
+2. **The conversation area hides the background** — the conversation pane, details panel and layout frame all paint opaque backgrounds. While a background is active the plugin makes those page-level containers transparent, while the sidebar, message bubbles and composer keep their own surfaces.
+3. **Images vanishing after restart** — large images are slow to write and are lost. The plugin compresses images to ≤1600px WEBP in-browser, then **persists them the moment they are uploaded**, so they survive restarts untouched.
+
 ## Features
 
-- 🖼️ **Upload your own image** — JPG / PNG / WEBP / GIF, compressed in-browser (max edge 1600px, WEBP output). The image is written into DSH settings **immediately on upload** and restored automatically after restarts — no separate save step needed.
-- 🎨 **Atmosphere presets** — Aurora, Ember, Paper; one click to switch, takes effect instantly.
-- 🎚️ **Fine tuning** — image presence, dark overlay, soft focus, fit mode (fill / contain / stretch) and focal position, all with a live preview.
-- 🔄 **Live preview** — what you see in the settings panel is what you get; discard anytime before saving.
+- 🖼️ **Upload your own image** — JPG / PNG / WEBP / GIF, compressed locally with Canvas (max edge 1600px, WEBP output — a good balance of quality and size). **Persisted immediately on upload**, no separate save step, restored automatically after restarts.
+- 🎨 **Three atmosphere presets** — Aurora, Ember, Paper; one click to switch, takes effect instantly. No image hunting required for a quick mood change.
+- 🎚️ **Five fine-tuning knobs** — image presence (opacity), dark overlay (keeps foreground readable), soft focus (blur), fit mode (fill / contain / stretch) and focal position (center / top / bottom / left / right).
+- 🔄 **Live preview** — what you see in the settings panel is what you get; drag a slider and watch the conversation area update in real time. Discard anytime before saving.
+- 🔒 **Privacy-friendly** — the image is processed only in your browser and written to your local settings document; **nothing is uploaded to any server**.
 - 🌐 **Bilingual UI** — 中文 / English.
-
-The background is a fixed browser layer; conversation content is never modified. Disable it (or click *Restore default*) to remove it.
+- 🧩 **Non-invasive, fully removable** — the background is a fixed browser layer; conversation content is never modified or covered. Turn off the *Enabled* switch or click *Restore default* to remove it completely.
+- 🌗 **Theme agnostic** — works in both light and dark themes (the dark-mode screenshot below is the real effect).
 
 ## Screenshots
 
@@ -77,10 +92,13 @@ Open `http://127.0.0.1:3080` (hard-refresh with Ctrl+F5 if needed), then go to *
 
 ## How it works
 
-- The host plugin (`lib/index.js`) registers the `ui-background` namespace with a Schemastery schema via `@deepseek-ai/dsh-settings`.
-- The browser plugin (`lib/client.js`) registers the *Background* row in the `settings.general.item` slot and reads/writes settings through the DSH `settingsScope`.
-- The background is a `position: fixed; z-index: 0` layer (`#dsh-background-layer`). While active, `--dsw-alias-bg-base` is overridden to `transparent` so the conversation area reveals the background; the sidebar, message bubbles and the composer keep their own surfaces.
-- Images are compressed to a data URL by Canvas and stored in the DSH settings document (`~/.dsh/settings.yaml`). Nothing is uploaded to any server.
+- The host plugin (`lib/index.js`) registers the `ui-background` namespace with a Schemastery schema via `@deepseek-ai/dsh-settings`, making the background a real part of DSH's settings system.
+- The browser plugin (`lib/client.js`) registers the *Background* row in the `settings.general.item` slot and reads/writes settings through the DSH `settingsScope` — the same persistence mechanism official settings use.
+- The background is a `position: fixed; z-index: 0` layer (`#dsh-background-layer`) pinned to the very bottom of the page. While active:
+  - `--dsw-alias-bg-base` is overridden to `transparent` so the conversation pane, details panel and layout frame reveal the background;
+  - the sidebar, message bubbles and composer use their own dedicated variables and stay opaque for readability;
+  - dropdowns rendered via `createPortal` into `<body>` (e.g. the message "more" menu) keep their original positioning and stacking, so clicks keep working.
+- Images are compressed to a data URL by Canvas and stored in the DSH settings document (`~/.dsh/settings.yaml`). Everything happens locally — nothing is uploaded.
 
 ## Project structure
 
@@ -91,6 +109,7 @@ dsh-background/
 │   └── client.js              # Browser plugin: background layer, settings row, upload, persistence
 ├── scripts/
 │   └── expose-namespace.mjs   # Helper: adds ui-background to the host allowlist
+├── screenshots/               # Repo showcase screenshots
 ├── cordis.patch.yml           # DSH bundle patch: registers the plugin entry
 ├── package.json               # Plugin metadata (dsh.client injection)
 ├── CHANGELOG.md
