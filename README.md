@@ -79,6 +79,50 @@ dsh web
 >
 > 安装脚本目前自动识别常见的 npm/npx DSH 安装位置。若白名单步骤提示找不到目标，请参考下方“手动安装”的第 3 步显式传入文件路径。
 
+### 🤖 让 DSH Agent 帮你安装
+
+如果你现在正通过 DSH Web 与 Agent 对话，可以把下面这段提示词直接发送给 Agent：
+
+> 请帮我安装 DSH Background 插件。
+>
+> 仓库地址：
+> `https://github.com/leavestring/awesome-dsh-background-plugin.git`
+>
+> 请按以下要求操作：
+>
+> 1. 检查 Node.js、pnpm、DSH 版本，以及当前实际使用的 DSH 安装位置；
+> 2. 克隆仓库并进入 `awesome-dsh-background-plugin` 目录；
+> 3. 将插件打包并安装到 `web` profile；
+> 4. 检查插件是否已加入 Web profile 的 dependencies 和 bundles；
+> 5. 检查当前实际使用的 `dsh-host-apiproxy` 是否已暴露 `ui-background`；
+> 6. 如果尚未暴露，只修改当前 DSH 实际使用的安装副本，不要随意修改其他 npx 缓存；
+> 7. 安装过程中不要启动第二个 DSH Web 服务；
+> 8. 完成安装并验证结果后，提醒我需要手动重启 DSH；
+> 9. 如果关闭当前 DSH 会中断你的会话，请不要替我关闭或重启，而是把正确的重启命令告诉我；
+> 10. 如果任何步骤失败，请停止操作并报告具体错误，不要反复执行或尝试破坏性修改。
+
+> [!IMPORTANT]
+> 如果执行安装的 Agent 就运行在当前 DSH 中，关闭 DSH 会立即中断 Agent 会话。因此，Agent 安装完成后通常不会替你关闭或重启当前 DSH。
+> **看到 Agent 报告安装成功后，请你回到启动 DSH 的终端，手动停止原来的 DSH，然后重新启动。**
+
+如果你平时直接使用 `dsh`：
+
+```bash
+dsh web
+```
+
+如果你平时通过 npx 使用 DSH：
+
+```bash
+npx @deepseek-ai/dsh web
+```
+
+重启完成后，打开 `http://127.0.0.1:3080`，按 `Ctrl+F5` 强制刷新，然后进入：
+
+**设置 → 通用设置 → 背景**
+
+> Agent 安装本质上仍然执行本页的安装流程，只是由 Agent 自动检查环境、执行命令并验证结果。请仅在可信的 Agent 环境中安装可信仓库。
+
 ### 🧑‍🔧 手动安装（想了解每一步在做什么）
 
 **第 1 步：打包插件** —— 把源码打包成可安装的 `.tgz`：
