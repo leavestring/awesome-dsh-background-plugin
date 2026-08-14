@@ -53,7 +53,7 @@ One command does everything — **build → install → allowlist**:
 
 ```bash
 # 1. Get the code: on GitHub click Code → Download ZIP and unzip, or:
-git clone https://github.com/<your-name>/dsh-background.git
+git clone https://github.com/<your-name>/awesome-dsh-background-plugin.git
 cd dsh-background
 
 # 2. Install (defaults to the "web" profile):
@@ -82,7 +82,7 @@ pnpm pack --pack-destination .
 **Step 2: Install into a DSH profile**:
 
 ```bash
-dsh plugin --profile web add ./dsh-background-plugin-0.1.7.tgz
+dsh plugin --profile web add ./awesome-dsh-background-plugin-0.1.7.tgz
 ```
 
 **Step 3: Expose the settings namespace (required, first install only)**

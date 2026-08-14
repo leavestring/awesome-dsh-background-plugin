@@ -53,7 +53,7 @@ DSH Web 默认只有一套主题色背景。如果你和我一样，希望自己
 
 ```bash
 # 1. 拿到代码：GitHub 页面点 Code → Download ZIP 解压，或执行：
-git clone https://github.com/<your-name>/dsh-background.git
+git clone https://github.com/<your-name>/awesome-dsh-background-plugin.git
 cd dsh-background
 
 # 2. 一键安装（默认装到 web profile）：
@@ -82,7 +82,7 @@ pnpm pack --pack-destination .
 **第 2 步：安装到 DSH profile** —— 装进你的 DSH 配置：
 
 ```bash
-dsh plugin --profile web add ./dsh-background-plugin-0.1.7.tgz
+dsh plugin --profile web add ./awesome-dsh-background-plugin-0.1.7.tgz
 ```
 
 **第 3 步：暴露命名空间（重要，仅首次需要）**

@@ -1,5 +1,5 @@
 {
-    "name":  "dsh-background-plugin",
+    "name":  "awesome-dsh-background-plugin",
     "version":  "0.1.7",
     "description":  "DSH Web background settings plugin with local image upload and live preview.",
     "type":  "module",

@@ -89,7 +89,7 @@ console.log("\n[dsh-background] building the plugin tarball…");
 run("pnpm", ["pack", "--pack-destination", "."], { cwd: ROOT });
 
 const pkg = JSON.parse(readFileSync(join(ROOT, "package.json"), "utf8"));
-const tarball = join(ROOT, `dsh-background-plugin-${pkg.version}.tgz`);
+const tarball = join(ROOT, `awesome-dsh-background-plugin-${pkg.version}.tgz`);
 if (!existsSync(tarball)) {
   fail(`expected tarball not found: ${tarball}`);
 }
