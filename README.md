@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="screenshots/banner.png" alt="DSH Background" width="100%" />
+</p>
+
 # DSH Background
 
 > 为 [DSH Web](https://github.com/deepseek-ai/deepseek-harness) 提供可上传图片 / 预设氛围的背景设置插件，设置持久化，重启不丢失。

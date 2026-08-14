@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="screenshots/banner.png" alt="DSH Background" width="100%" />
+</p>
+
 # DSH Background
 
 > A DSH Cordis plugin that gives your DSH Web workspace a customizable background — atmosphere presets or your own image, persisted across restarts.
