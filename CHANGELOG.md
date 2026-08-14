@@ -2,6 +2,13 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.1.9] - 2026-08-14
+
+### Fixed
+- The enabled/disabled toggle and preset selection now persist immediately,
+  so closing and reopening the settings panel no longer reverts a background
+  you just turned off (or a preset you just picked).
+
 ## [0.1.8] - 2026-08-14
 
 ### Changed
