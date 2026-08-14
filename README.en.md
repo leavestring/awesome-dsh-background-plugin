@@ -43,21 +43,45 @@ Dark mode with a custom image background:
 
 ## Installation
 
-### 1. Build the plugin
+### ⚡ One-command install (recommended, beginner friendly)
+
+One command does everything — **build → install → allowlist**:
 
 ```bash
+# 1. Get the code: on GitHub click Code → Download ZIP and unzip, or:
 git clone https://github.com/<your-name>/dsh-background.git
 cd dsh-background
+
+# 2. Install (defaults to the "web" profile):
+node scripts/install.mjs
+
+# 3. Restart DSH:
+dsh web
+```
+
+Then open `http://127.0.0.1:3080` (**Ctrl+F5** to bypass the browser cache) and go to **Settings → General → Background**.
+
+> Install into another profile: `node scripts/install.mjs --profile <your-profile>`
+>
+> If it says the `dsh` command is missing (you launch DSH via npx), set `DSH_CMD` and re-run:
+> - Windows PowerShell: `$env:DSH_CMD = "npx @deepseek-ai/dsh"`
+> - macOS / Linux: `export DSH_CMD='npx @deepseek-ai/dsh'`
+
+### 🧑‍🔧 Manual install (understand each step)
+
+**Step 1: Build the plugin** — turn the source into an installable `.tgz`:
+
+```bash
 pnpm pack --pack-destination .
 ```
 
-### 2. Install into a DSH profile
+**Step 2: Install into a DSH profile**:
 
 ```bash
 dsh plugin --profile web add ./dsh-background-plugin-0.1.7.tgz
 ```
 
-### 3. Expose the settings namespace (required, first install only)
+**Step 3: Expose the settings namespace (required, first install only)**
 
 DSH's `dsh-host-apiproxy` only allows **allowlisted** settings namespaces to be read and written by the browser. If the namespace is missing, saves are silently rejected (`settings-not-exposed`) — you see the toggle flip back to "disabled" right after saving.
 
@@ -75,7 +99,7 @@ node scripts/expose-namespace.mjs <path-to>/@deepseek-ai/dsh-host-apiproxy/lib/i
 
 > Manual alternative: add `"ui-background"` to the `WEB_SETTINGS_NAMESPACES` array (right after `"ui-theme"`) inside the file above.
 
-### 4. Restart and refresh
+**Step 4: Restart and refresh**
 
 ```bash
 dsh web
@@ -83,6 +107,15 @@ dsh web
 
 Open `http://127.0.0.1:3080` (hard-refresh with Ctrl+F5 if needed), then go to **Settings → General → Background**.
 
+### ❓ FAQ
+
+| Symptom | Fix |
+|---|---|
+| `pnpm not found` | Install pnpm: `npm install -g pnpm` (or `corepack enable`) |
+| `dsh` command not found | Set the `DSH_CMD` env var and re-run (see one-command section) |
+| Toggle flips back to "disabled" after saving | Allowlist not applied: re-run `node scripts/expose-namespace.mjs`, or add it manually (manual step 3) |
+| Background not showing / page looks stale | **Ctrl+F5** hard refresh (browser cached the old bundle), or restart `dsh web` |
+| Uploaded image lost after restart | Make sure the plugin is **0.1.6+** (uploads auto-save); older versions need "Save background" |
 ## Usage
 
 1. Open **Settings → General → Background**.
@@ -108,6 +141,7 @@ dsh-background/
 │   ├── index.js               # Host plugin: registers the ui-background namespace + schema
 │   └── client.js              # Browser plugin: background layer, settings row, upload, persistence
 ├── scripts/
+│   ├── install.mjs            # One-command installer (build + install + allowlist)
 │   └── expose-namespace.mjs   # Helper: adds ui-background to the host allowlist
 ├── screenshots/               # Repo showcase screenshots
 ├── cordis.patch.yml           # DSH bundle patch: registers the plugin entry

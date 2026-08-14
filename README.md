@@ -43,21 +43,45 @@ DSH Web 默认只有一套主题色背景。如果你和我一样，希望自己
 
 ## 安装
 
-### 1. 打包插件
+### ⚡ 一键安装（推荐，小白友好）
+
+只需要一条命令，脚本会自动完成「打包 → 安装 → 白名单」全部步骤：
 
 ```bash
+# 1. 拿到代码：GitHub 页面点 Code → Download ZIP 解压，或执行：
 git clone https://github.com/<your-name>/dsh-background.git
 cd dsh-background
+
+# 2. 一键安装（默认装到 web profile）：
+node scripts/install.mjs
+
+# 3. 重启 DSH：
+dsh web
+```
+
+然后打开 `http://127.0.0.1:3080`（**Ctrl+F5 强刷**，清掉旧缓存），进入 **设置 → 通用设置 → 背景** 即可使用。
+
+> 装到其他 profile：`node scripts/install.mjs --profile 你的profile名`
+>
+> 如果提示 `dsh` 命令找不到（你是用 npx 启动 DSH 的）：
+> - Windows PowerShell：`$env:DSH_CMD = "npx @deepseek-ai/dsh"` 后重新运行
+> - macOS / Linux：`export DSH_CMD='npx @deepseek-ai/dsh'` 后重新运行
+
+### 🧑‍🔧 手动安装（想了解每一步在做什么）
+
+**第 1 步：打包插件** —— 把源码打包成可安装的 `.tgz`：
+
+```bash
 pnpm pack --pack-destination .
 ```
 
-### 2. 安装到 DSH profile
+**第 2 步：安装到 DSH profile** —— 装进你的 DSH 配置：
 
 ```bash
 dsh plugin --profile web add ./dsh-background-plugin-0.1.7.tgz
 ```
 
-### 3. 暴露命名空间（重要，仅首次需要）
+**第 3 步：暴露命名空间（重要，仅首次需要）**
 
 DSH 的 `dsh-host-apiproxy` 只允许**白名单内**的 settings 命名空间被浏览器读写。命名空间不在白名单时，保存会被静默拒绝（`settings-not-exposed`），表现就是：点「启用」后一保存又变回「未启用」。
 
@@ -75,7 +99,7 @@ node scripts/expose-namespace.mjs <path-to>/@deepseek-ai/dsh-host-apiproxy/lib/i
 
 > 手动改法：在上面的文件里，往 `WEB_SETTINGS_NAMESPACES` 数组（`"ui-theme"` 之后）加入 `"ui-background"`。
 
-### 4. 重启并刷新
+**第 4 步：重启并刷新**
 
 ```bash
 dsh web
@@ -83,6 +107,15 @@ dsh web
 
 打开 `http://127.0.0.1:3080`（必要时 Ctrl+F5 强刷），进入 **设置 → 通用设置 → 背景**。
 
+### ❓ 常见问题（FAQ）
+
+| 现象 | 解决 |
+|---|---|
+| 提示 `pnpm not found` | 安装 pnpm：`npm install -g pnpm`（或用 Corepack：`corepack enable`） |
+| 提示 `dsh` 命令找不到 | 设置 `DSH_CMD` 环境变量后重跑（见上方一键安装说明） |
+| 点「启用」保存后又变回「未启用」 | 白名单未生效：重跑 `node scripts/expose-namespace.mjs`，或按手动安装第 3 步手动添加 |
+| 页面还是旧样子 / 背景不显示 | **Ctrl+F5 强刷**（浏览器缓存了旧版本），或重启 `dsh web` |
+| 上传的图片重启后消失 | 确认插件是 **0.1.6 及以上**（上传即自动保存）；旧版本需点「保存背景」 |
 ## 使用
 
 1. 打开 **设置 → 通用设置 → 背景**
@@ -108,6 +141,7 @@ dsh-background/
 │   ├── index.js               # Host 插件：注册 ui-background 设置命名空间与 schema
 │   └── client.js              # 浏览器端：背景图层、设置行、上传压缩、持久化
 ├── scripts/
+│   ├── install.mjs            # 一键安装脚本（打包 + 安装 + 白名单）
 │   └── expose-namespace.mjs   # 辅助脚本：把 ui-background 加入 Host 暴露白名单
 ├── screenshots/               # 仓库展示截图
 ├── cordis.patch.yml           # DSH bundle 补丁：注册插件条目
