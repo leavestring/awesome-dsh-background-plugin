@@ -32,10 +32,6 @@ This plugin turns "background" into a **first-class setting item** using DSH's o
 
 ## Screenshots
 
-Settings panel (Settings → General → Background):
-
-![Settings panel](screenshots/settings-panel.png)
-
 Dark mode with a custom image background:
 
 ![Dark mode custom background](screenshots/dark-mode-image.png)

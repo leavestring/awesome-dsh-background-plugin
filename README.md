@@ -32,10 +32,6 @@ DSH Web 默认只有一套主题色背景。如果你和我一样，希望自己
 
 ## 截图
 
-设置面板（设置 → 通用设置 → 背景）：
-
-![设置面板](screenshots/settings-panel.png)
-
 暗色模式 + 自定义图片背景：
 
 ![暗色模式自定义背景](screenshots/dark-mode-image.png)
