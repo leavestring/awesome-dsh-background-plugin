@@ -1,0 +1,54 @@
+{
+    "name":  "dsh-background-plugin",
+    "version":  "0.1.6",
+    "description":  "DSH Web background settings plugin with local image upload and live preview.",
+    "type":  "module",
+    "main":  "lib/index.js",
+    "exports":  {
+                    ".":  "./lib/index.js",
+                    "./client":  "./lib/client.js",
+                    "./package.json":  "./package.json",
+                    "./cordis.patch.yml":  "./cordis.patch.yml"
+                },
+    "files":  [
+                  "lib/index.js",
+                  "lib/client.js",
+                  "cordis.patch.yml",
+                  "README.md"
+              ],
+    "dsh":  {
+                "bundle":  {
+                               "patch":  "./cordis.patch.yml"
+                           },
+                "client":  {
+                               "inject":  [
+                                              "@deepseek-ai/dsh-api-remotes",
+                                              "@deepseek-ai/dsh-client-connection",
+                                              "@deepseek-ai/dsh-client-locale",
+                                              "@deepseek-ai/dsh-client-runtime",
+                                              "@deepseek-ai/dsh-client-ui-settings",
+                                              "@deepseek-ai/dsh-client-ui-slots"
+                                          ],
+                               "platform":  "web",
+                               "immediately":  true
+                           }
+            },
+    "peerDependencies":  {
+                             "@deepseek-ai/cordis":  "^4.0.1",
+                             "@deepseek-ai/dsh-api-remotes":  "^0.1.0-rc.6",
+                             "@deepseek-ai/dsh-client-connection":  "^0.1.0-rc.6",
+                             "@deepseek-ai/dsh-client-locale":  "^0.1.0-rc.6",
+                             "@deepseek-ai/dsh-client-runtime":  "^0.1.0-rc.6",
+                             "@deepseek-ai/dsh-client-ui-settings":  "^0.1.0-rc.6",
+                             "@deepseek-ai/dsh-client-ui-slots":  "^0.1.0-rc.6",
+                             "react":  "^18.2.0"
+                         },
+    "scripts":  {
+                    "check":  "node --check lib/client.js \u0026\u0026 node --check lib/index.js"
+                },
+    "license":  "MIT",
+    "dependencies":  {
+                         "@deepseek-ai/dsh-settings":  "^0.1.0-rc.6",
+                         "@deepseek-ai/schemastery":  "^3.18.1"
+                     }
+}

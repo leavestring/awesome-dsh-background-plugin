@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+
+# Packed tarballs (built on demand via `pnpm pack`)
+*.tgz
+
+# Logs & OS noise
+*.log
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/

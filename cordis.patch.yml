@@ -1,0 +1,4 @@
+﻿# DSH Background Lab: one host row plus its browser client row.
+- insert:
+    - id: ui-background
+      name: 'dsh-background-plugin'
