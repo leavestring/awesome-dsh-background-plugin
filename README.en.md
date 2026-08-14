@@ -53,7 +53,7 @@ One command does everything — **build → install → allowlist**:
 
 ```bash
 # 1. Get the code: on GitHub click Code → Download ZIP and unzip, or:
-git clone https://github.com/<your-name>/awesome-dsh-background-plugin.git
+git clone https://github.com/leavestring/awesome-dsh-background-plugin.git
 cd dsh-background
 
 # 2. Install (defaults to the "web" profile):
