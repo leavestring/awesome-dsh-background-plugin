@@ -18,7 +18,13 @@
 
 ## 截图
 
-*待补充 —— 欢迎通过 PR 添加。*
+设置面板（设置 → 通用设置 → 背景）：
+
+![设置面板](screenshots/settings-panel.png)
+
+暗色模式 + 自定义图片背景：
+
+![暗色模式自定义背景](screenshots/dark-mode-image.png)
 
 ## 安装
 

@@ -18,7 +18,13 @@ The background is a fixed browser layer; conversation content is never modified.
 
 ## Screenshots
 
-*Coming soon — open a PR if you would like to add one.*
+Settings panel (Settings → General → Background):
+
+![Settings panel](screenshots/settings-panel.png)
+
+Dark mode with a custom image background:
+
+![Dark mode custom background](screenshots/dark-mode-image.png)
 
 ## Installation
 
