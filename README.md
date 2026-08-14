@@ -42,11 +42,11 @@ DSH Web 默认只有一套主题色背景。如果你和我一样，希望自己
 
 ## 功能
 
-- 🖼️ **上传你自己的图片**：支持 JPG / PNG / WEBP / GIF，浏览器本地 Canvas 压缩（长边 ≤ 1600px，WEBP 输出，兼顾画质与体积）。**上传即自动保存**，无需再点保存按钮，重启后自动恢复。
+- 🖼️ **上传你自己的图片**：支持 JPG / PNG / WEBP / GIF（GIF 经 Canvas 处理后会转为静态图片），浏览器本地压缩（长边 ≤ 1600px，WEBP 输出，兼顾画质与体积）。**上传即自动保存**，无需再点保存按钮，重启后自动恢复。
 - 🎨 **三种预设氛围**：极光（aurora）、余烬（ember）、宣纸（paper），一键切换、点击即时生效，不想找图也能快速换个心情。
 - 🎚️ **五维细调**：图像存在感（透明度）、暗色遮罩（保证前景可读）、柔焦（模糊）、适配方式（铺满 / 完整显示 / 拉伸）、焦点位置（居中 / 顶部 / 底部 / 左侧 / 右侧）。
 - 🔄 **实时预览**：设置面板内所见即所得，拖动滑块即时看到对话区的效果；不满意随时「放弃修改」。
-- 🔒 **隐私友好**：图片只在你自己的浏览器里处理，压缩后写入本地设置文档，**不会上传到任何服务器**。
+- 🔒 **隐私友好**：图片在浏览器中压缩后，经本机 DSH 设置接口写入本地设置文档，**不会发送给第三方图片服务**。
 - 🌐 **双语界面**：中文 / English。
 - 🧩 **低侵入、可随时移除**：背景是浏览器内一个固定图层，不修改、不遮挡任何对话内容；关闭「已启用」开关或点击「恢复默认」即可完全移除，不留痕迹。
 - 🌗 **主题兼容**：浅色 / 深色主题下都正常工作（附带的暗色模式截图就是真实效果）。
@@ -55,17 +55,17 @@ DSH Web 默认只有一套主题色背景。如果你和我一样，希望自己
 
 ### ⚡ 一键安装（推荐，小白友好）
 
-只需要一条命令，脚本会自动完成「打包 → 安装 → 白名单」全部步骤：
+准备好 Node.js（≥ 18）、pnpm 和 DSH 后，运行一个安装脚本即可自动完成「打包 → 安装 → 白名单」：
 
 ```bash
 # 1. 拿到代码：GitHub 页面点 Code → Download ZIP 解压，或执行：
 git clone https://github.com/leavestring/awesome-dsh-background-plugin.git
-cd dsh-background
+cd awesome-dsh-background-plugin
 
 # 2. 一键安装（默认装到 web profile）：
 node scripts/install.mjs
 
-# 3. 重启 DSH：
+# 3. 完全停止原来的 DSH 进程，再重新启动：
 dsh web
 ```
 
@@ -74,8 +74,10 @@ dsh web
 > 装到其他 profile：`node scripts/install.mjs --profile 你的profile名`
 >
 > 如果提示 `dsh` 命令找不到（你是用 npx 启动 DSH 的）：
-> - Windows PowerShell：`$env:DSH_CMD = "npx @deepseek-ai/dsh"` 后重新运行
-> - macOS / Linux：`export DSH_CMD='npx @deepseek-ai/dsh'` 后重新运行
+> - Windows PowerShell：`$env:DSH_CMD = "npx @deepseek-ai/dsh"` 后重新运行；安装后用 `npx @deepseek-ai/dsh web` 启动
+> - macOS / Linux：`export DSH_CMD='npx @deepseek-ai/dsh'` 后重新运行；安装后用 `npx @deepseek-ai/dsh web` 启动
+>
+> 安装脚本目前自动识别常见的 npm/npx DSH 安装位置。若白名单步骤提示找不到目标，请参考下方“手动安装”的第 3 步显式传入文件路径。
 
 ### 🧑‍🔧 手动安装（想了解每一步在做什么）
 
@@ -91,9 +93,9 @@ pnpm pack --pack-destination .
 dsh plugin --profile web add ./awesome-dsh-background-plugin-0.1.9.tgz
 ```
 
-**第 3 步：暴露命名空间（重要，仅首次需要）**
+**第 3 步：暴露命名空间（重要，当前 DSH 安装副本通常只需一次）**
 
-DSH 的 `dsh-host-apiproxy` 只允许**白名单内**的 settings 命名空间被浏览器读写。命名空间不在白名单时，保存会被静默拒绝（`settings-not-exposed`），表现就是：点「启用」后一保存又变回「未启用」。
+DSH 的 `dsh-host-apiproxy` 只允许**白名单内**的 settings 命名空间被浏览器读写。命名空间不在白名单时，保存会被拒绝（`settings-not-exposed`），表现就是：点「启用」后一保存又变回「未启用」。DSH 升级、清理 npx 缓存或更换安装方式后，可能需要重新执行这一步。
 
 运行仓库内辅助脚本，把 `ui-background` 加入白名单（幂等，可重复运行）：
 
@@ -141,12 +143,12 @@ dsh web
   - 把 `--dsw-alias-bg-base` 覆盖为 `transparent`，让对话主区、详情面板、布局框架透出背景；
   - 侧栏、消息气泡、输入框使用各自的专用变量，保持不透明，保证可读性与功能区分；
   - 通过 `createPortal` 渲染到 `<body>` 的下拉菜单（如消息「更多」菜单）保持原有定位与层级，点击不受影响。
-- 图片经 Canvas 压缩为 dataURL 后写入 DSH 设置文档（`~/.dsh/settings.yaml`），全程本地处理，不上传任何服务器。
+- 图片经 Canvas 压缩为 dataURL 后，通过本机 DSH 设置接口写入本地设置文档（默认位于 `~/.dsh/settings.yaml`），不会发送给第三方图片服务。
 
 ## 目录结构
 
 ```
-dsh-background/
+awesome-dsh-background-plugin/
 ├── lib/
 │   ├── index.js               # Host 插件：注册 ui-background 设置命名空间与 schema
 │   └── client.js              # 浏览器端：背景图层、设置行、上传压缩、持久化
