@@ -9,11 +9,17 @@
  * (the npx/pnpm cache copy of `dsh-host-apiproxy`) to add `ui-background` to
  * the allowlist. It is idempotent and safe to re-run.
  *
+ * This allowlist only exists on DSH 0.1.x. DSH 0.2.x — the desktop app included —
+ * exposes every registered namespace through `dsh-api-settings-controller`, so
+ * there is nothing to patch. Pass `--if-present` to turn that into a skip
+ * instead of an error (scripts/install.mjs does).
+ *
  * After running it, restart `dsh web` for the change to take effect.
  *
  * Usage:
- *   node scripts/expose-namespace.mjs            # auto-detect the dsh install
- *   node scripts/expose-namespace.mjs <file>     # patch a specific file
+ *   node scripts/expose-namespace.mjs              # auto-detect the dsh install
+ *   node scripts/expose-namespace.mjs <file>       # patch a specific file
+ *   node scripts/expose-namespace.mjs --if-present # DSH 0.2.x: skip, do not fail
  */
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
@@ -64,12 +70,24 @@ function findTargetFile() {
   return null;
 }
 
-function patchFile(file) {
+function patchFile(file, ifPresent) {
   const text = readFileSync(file, "utf8");
   const header = "const WEB_SETTINGS_NAMESPACES = [";
   const start = text.indexOf(header);
   if (start < 0) {
-    console.error(`[dsh-background] cannot locate WEB_SETTINGS_NAMESPACES in ${file}`);
+    if (ifPresent) {
+      console.log(
+        `[dsh-background] ${file} has no WEB_SETTINGS_NAMESPACES — nothing to do.\n` +
+          "                That allowlist only exists on DSH 0.1.x; DSH 0.2.x exposes\n" +
+          "                every registered namespace through dsh-api-settings-controller."
+      );
+      return true;
+    }
+    console.error(
+      `[dsh-background] cannot locate WEB_SETTINGS_NAMESPACES in ${file}\n` +
+        "  That allowlist only exists on DSH 0.1.x. If this is a DSH 0.2.x install,\n" +
+        "  no action is needed — the namespace is exposed automatically."
+    );
     return false;
   }
   const end = text.indexOf("];", start);
@@ -97,13 +115,35 @@ function patchFile(file) {
   return true;
 }
 
-const explicit = process.argv[2];
+const args = process.argv.slice(2);
+if (args.includes("--help") || args.includes("-h")) {
+  console.log(
+    "Usage: node scripts/expose-namespace.mjs [file] [--if-present]\n" +
+      "\n" +
+      "  file           patch this dsh-host-apiproxy/lib/index.js instead of auto-detecting\n" +
+      "  --if-present   treat \"nothing to patch\" as a skip (DSH 0.2.x needs no allowlist)"
+  );
+  process.exit(0);
+}
+const ifPresent = args.includes("--if-present");
+const explicit = args.find((arg) => !arg.startsWith("-"));
+
 const target = explicit ?? findTargetFile();
 if (!target) {
+  if (ifPresent) {
+    console.log(
+      "[dsh-background] dsh-host-apiproxy was not found — nothing to do.\n" +
+        "                DSH 0.2.x (including the desktop app) does not use this allowlist,\n" +
+        "                so this step is skipped."
+    );
+    process.exit(0);
+  }
   console.error(
     "[dsh-background] could not locate dsh-host-apiproxy.\n" +
-      "  Run: node scripts/expose-namespace.mjs <path-to>/dsh-host-apiproxy/lib/index.js"
+      "  DSH 0.2.x does not use this allowlist and needs no action here.\n" +
+      "  On DSH 0.1.x, point the script at your copy explicitly:\n" +
+      "    node scripts/expose-namespace.mjs <path-to>/@deepseek-ai/dsh-host-apiproxy/lib/index.js"
   );
   process.exit(1);
 }
-if (!patchFile(target)) process.exit(1);
+if (!patchFile(target, ifPresent)) process.exit(ifPresent ? 0 : 1);
