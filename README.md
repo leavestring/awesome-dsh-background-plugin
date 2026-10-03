@@ -9,7 +9,7 @@
 **简体中文** | [English](README.en.md)
 
 [![Listed on DSH Directory](https://dsh.directory/badges/listed.svg)](https://dsh.directory/plugins/leavestring/awesome-dsh-background-plugin)
-[![Release v0.2.1](https://img.shields.io/badge/release-v0.2.1-5B4CF0?style=flat-square)](https://github.com/leavestring/awesome-dsh-background-plugin/releases)
+[![Release v0.2.2](https://img.shields.io/badge/release-v0.2.2-5B4CF0?style=flat-square)](https://github.com/leavestring/awesome-dsh-background-plugin/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-0B7285?style=flat-square)](LICENSE)
 [![Node.js](https://img.shields.io/badge/Node.js-%3E%3D18-339933?style=flat-square&logo=nodedotjs&logoColor=white)](package.json)
 [![DSH Desktop](https://img.shields.io/badge/DSH-Desktop-2F6FEB?style=flat-square)](cordis.patch.yml)
@@ -24,15 +24,15 @@ DSH 的插件**按 profile 隔离**：装在 `web` 里的插件**不会**出现�
 
 | 你在用 | DSH 版本 | 该装的插件版本 | 目标 profile |
 |---|---|---|---|
-| **DSH 桌面端**（Windows / macOS 应用） | `0.2.x` | **`0.2.1`** | `desktop` |
-| `dsh web`（新版运行时） | `0.2.x` | `0.2.1` | `web` |
+| **DSH 桌面端**（Windows / macOS 应用） | `0.2.x` | **`0.2.2`** | `desktop` |
+| `dsh web`（新版运行时） | `0.2.x` | `0.2.2` | `web` |
 | `dsh web`（旧版运行时） | `0.1.x` | `0.1.9` | `web` |
 
 - **怎么查自己的 DSH 版本**：命令行运行 `dsh --version`（桌面端用应用自带的 CLI，见下方「方式 B」；它会打印同一运行时的版本）。
 - 桌面端插件管理器还会**校验 peer 版本**，版本不匹配会直接拒绝安装并回滚，报错形如
   `Plugin awesome-dsh-background-plugin@0.1.9 is incompatible with dsh 0.2.0-rc.2`。
-  看到这个就是装错版本线了，改用 `0.2.1` 即可。
-- `0.2.1` 相对 `0.1.9` 是**为 0.2.x 重写的移植版**（host 侧导出 `Config` + `volatile()`，客户端改用
+  看到这个就是装错版本线了，改用 `0.2.2` 即可。
+- `0.2.x`（自 `0.2.1` 起）相对 `0.1.9` 是**为 0.2.x 重写的移植版**（host 侧导出 `Config` + `volatile()`，客户端改用
   `ctx.configForms`），不向下兼容 `0.1.x`；`0.1.x` 用户请继续用 `v0.1.9`（见下方 Web 端安装）。
 
 ## 为什么需要它？
@@ -91,7 +91,7 @@ DSH 默认只有一套主题色背景。如果你和我一样，希望自己的�
    | 填什么 | 例子 |
    |---|---|
    | 本地目录路径 | 你 clone 下来的仓库目录，如 `D:\code\awesome-dsh-background-plugin` |
-   | 压缩包路径 | 已打包好的 `.tgz`，如 `D:\code\awesome-dsh-background-plugin\awesome-dsh-background-plugin-0.2.1.tgz` |
+   | 压缩包路径 | 已打包好的 `.tgz`，如 `D:\code\awesome-dsh-background-plugin\awesome-dsh-background-plugin-0.2.2.tgz` |
    | Git 仓库地址 | `https://github.com/leavestring/awesome-dsh-background-plugin` |
 
 4. 点 **安装**；
@@ -120,7 +120,7 @@ DSH 默认只有一套主题色背景。如果你和我一样，希望自己的�
 例如：
 
 ```powershell
-& "E:\Deepseek Harness\resources\runtime\cli\bin\dsh.cmd" plugin --profile desktop add "D:\code\awesome-dsh-background-plugin\awesome-dsh-background-plugin-0.2.1.tgz"
+& "E:\Deepseek Harness\resources\runtime\cli\bin\dsh.cmd" plugin --profile desktop add "D:\code\awesome-dsh-background-plugin\awesome-dsh-background-plugin-0.2.2.tgz"
 ```
 
 安装成功后可以核对一下：
@@ -134,7 +134,7 @@ DSH 默认只有一套主题色背景。如果你和我一样，希望自己的�
 ```bash
 git clone https://github.com/leavestring/awesome-dsh-background-plugin.git
 cd awesome-dsh-background-plugin
-pnpm pack --pack-destination .          # 生成 awesome-dsh-background-plugin-0.2.1.tgz
+pnpm pack --pack-destination .          # 生成 awesome-dsh-background-plugin-0.2.2.tgz
 ```
 
 然后把生成的 `.tgz` 用上面的方式 A 或 B 装进 `desktop` profile。
@@ -150,7 +150,7 @@ pnpm pack --pack-destination .          # 生成 awesome-dsh-background-plugin-0
 
 ```bash
 # DSH 0.2.x（新版运行时）
-dsh plugin --profile web add ./awesome-dsh-background-plugin-0.2.1.tgz
+dsh plugin --profile web add ./awesome-dsh-background-plugin-0.2.2.tgz
 
 # DSH 0.1.x（旧版运行时）—— 用 0.1.9，并额外执行白名单脚本
 dsh plugin --profile web add ./awesome-dsh-background-plugin-0.1.9.tgz
@@ -192,7 +192,7 @@ node scripts/install.mjs --profile web
 > 请按以下要求操作：
 >
 > 1. 先确认当前 DSH 运行时的版本，以及桌面端实际使用的 profile 目录；
-> 2. 确认版本匹配：DSH `0.2.x` 用插件 `0.2.1`，装到 `desktop` profile；DSH `0.1.x` 用 `0.1.9`，装到 `web` profile 并额外执行白名单脚本；
+> 2. 确认版本匹配：DSH `0.2.x` 用插件 `0.2.2`，装到 `desktop` profile；DSH `0.1.x` 用 `0.1.9`，装到 `web` profile 并额外执行白名单脚本；
 > 3. 克隆仓库、按需 `pnpm pack` 打包，并安装到目标 profile；
 > 4. 检查插件是否已同时写入该 profile 的 `dependencies` 和 `dsh.profile.bundles`；
 > 5. `0.2.x` 不需要白名单，**不要**执行 `expose-namespace.mjs`；`0.1.x` 才需要；
@@ -217,10 +217,10 @@ pnpm pack --pack-destination .
 
 ```bash
 # 桌面端（DSH 0.2.x）
-dsh plugin --profile desktop add ./awesome-dsh-background-plugin-0.2.1.tgz
+dsh plugin --profile desktop add ./awesome-dsh-background-plugin-0.2.2.tgz
 
 # Web 端（DSH 0.2.x）
-dsh plugin --profile web add ./awesome-dsh-background-plugin-0.2.1.tgz
+dsh plugin --profile web add ./awesome-dsh-background-plugin-0.2.2.tgz
 ```
 
 在桌面端上，`dsh` 请用应用自带的那个（见「方式 B」的完整路径）。
@@ -249,7 +249,7 @@ node scripts/expose-namespace.mjs <path-to>/@deepseek-ai/dsh-host-apiproxy/lib/i
 
 | 现象 | 解决 |
 |---|---|
-| 桌面端装插件时提示 `incompatible with dsh 0.2.x` | 装错版本线了：`0.2.x` 要用 **0.2.1**，不要用 0.1.9 |
+| 桌面端装插件时提示 `incompatible with dsh 0.2.x` | 装错版本线了：`0.2.x` 要用 **0.2.2**，不要用 0.1.9 |
 | 桌面端「设置」里根本找不到「背景」 | ① 插件装到了别的 profile（桌面端是 `desktop`）；② 装完没启用 / 没重启；③ 版本不匹配被拒。用「设置 → 插件」确认它已安装并启用 |
 | Web 端（0.1.x）点「启用」保存后又变回「未启用」 | 白名单未生效：重跑 `node scripts/expose-namespace.mjs` |
 | 提示 `pnpm not found` | 安装 pnpm：`npm install -g pnpm`（或用 Corepack：`corepack enable`）；桌面端用应用内安装则不需要 |

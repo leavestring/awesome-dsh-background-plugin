@@ -2,7 +2,7 @@
 
 All notable changes to this project are documented in this file.
 
-## [Unreleased]
+## [0.2.2] - 2026-10-03
 
 ### Fixed
 - The Windows title bar is opaque and theme-correct again while a background is

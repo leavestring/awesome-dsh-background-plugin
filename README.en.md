@@ -9,7 +9,7 @@
 [简体中文](README.md) | **English**
 
 [![Listed on DSH Directory](https://dsh.directory/badges/listed.svg)](https://dsh.directory/plugins/leavestring/awesome-dsh-background-plugin)
-[![Release v0.2.1](https://img.shields.io/badge/release-v0.2.1-5B4CF0?style=flat-square)](https://github.com/leavestring/awesome-dsh-background-plugin/releases)
+[![Release v0.2.2](https://img.shields.io/badge/release-v0.2.2-5B4CF0?style=flat-square)](https://github.com/leavestring/awesome-dsh-background-plugin/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-0B7285?style=flat-square)](LICENSE)
 [![Node.js](https://img.shields.io/badge/Node.js-%3E%3D18-339933?style=flat-square&logo=nodedotjs&logoColor=white)](package.json)
 [![DSH Desktop](https://img.shields.io/badge/DSH-Desktop-2F6FEB?style=flat-square)](cordis.patch.yml)
@@ -24,15 +24,15 @@ DSH plugins are **isolated per profile**: a plugin installed into `web` will **n
 
 | You are on | DSH version | Install this plugin | Target profile |
 |---|---|---|---|
-| **DSH Desktop** (Windows / macOS app) | `0.2.x` | **`0.2.1`** | `desktop` |
-| `dsh web` (new runtime) | `0.2.x` | `0.2.1` | `web` |
+| **DSH Desktop** (Windows / macOS app) | `0.2.x` | **`0.2.2`** | `desktop` |
+| `dsh web` (new runtime) | `0.2.x` | `0.2.2` | `web` |
 | `dsh web` (old runtime) | `0.1.x` | `0.1.9` | `web` |
 
 - **How to check your DSH version**: run `dsh --version` (on the desktop, use the CLI bundled with the app — see Option B below; it reports the same runtime version).
 - The desktop plugin manager also **enforces peer versions** and rolls back an install it deems incompatible, e.g.
   `Plugin awesome-dsh-background-plugin@0.1.9 is incompatible with dsh 0.2.0-rc.2`.
-  If you see that, you picked the wrong line — use `0.2.1`.
-- `0.2.1` is a **port rewritten for 0.2.x** (host exports `Config` with `volatile()` fields; the browser half uses `ctx.configForms`). It is not backwards compatible with `0.1.x` — `0.1.x` users should stay on `v0.1.9` (see the Web section below).
+  If you see that, you picked the wrong line — use `0.2.2`.
+- `0.2.x` (from `0.2.1` on) is a **port rewritten for 0.2.x** (host exports `Config` with `volatile()` fields; the browser half uses `ctx.configForms`). It is not backwards compatible with `0.1.x` — `0.1.x` users should stay on `v0.1.9` (see the Web section below).
 
 ## Why this plugin?
 
@@ -90,7 +90,7 @@ The desktop app runs the `desktop` profile:
    | What to enter | Example |
    |---|---|
    | A local directory path | your cloned repo, e.g. `D:\code\awesome-dsh-background-plugin` |
-   | A tarball path | e.g. `D:\code\awesome-dsh-background-plugin\awesome-dsh-background-plugin-0.2.1.tgz` |
+   | A tarball path | e.g. `D:\code\awesome-dsh-background-plugin\awesome-dsh-background-plugin-0.2.2.tgz` |
    | A Git repository address | `https://github.com/leavestring/awesome-dsh-background-plugin` |
 
 4. Click **Install**.
@@ -120,7 +120,7 @@ The desktop app ships its own `dsh` CLI, so **you do not need** Node or pnpm ins
 For example:
 
 ```powershell
-& "E:\Deepseek Harness\resources\runtime\cli\bin\dsh.cmd" plugin --profile desktop add "D:\code\awesome-dsh-background-plugin\awesome-dsh-background-plugin-0.2.1.tgz"
+& "E:\Deepseek Harness\resources\runtime\cli\bin\dsh.cmd" plugin --profile desktop add "D:\code\awesome-dsh-background-plugin\awesome-dsh-background-plugin-0.2.2.tgz"
 ```
 
 Verify afterwards:
@@ -134,7 +134,7 @@ Verify afterwards:
 ```bash
 git clone https://github.com/leavestring/awesome-dsh-background-plugin.git
 cd awesome-dsh-background-plugin
-pnpm pack --pack-destination .          # produces awesome-dsh-background-plugin-0.2.1.tgz
+pnpm pack --pack-destination .          # produces awesome-dsh-background-plugin-0.2.2.tgz
 ```
 
 Then install the resulting `.tgz` with Option A or B.
@@ -150,7 +150,7 @@ Restart the desktop app (or click **Enable now**), then go to **Settings → Gen
 
 ```bash
 # DSH 0.2.x (new runtime)
-dsh plugin --profile web add ./awesome-dsh-background-plugin-0.2.1.tgz
+dsh plugin --profile web add ./awesome-dsh-background-plugin-0.2.2.tgz
 
 # DSH 0.1.x (old runtime) — use 0.1.9 and run the allowlist helper too
 dsh plugin --profile web add ./awesome-dsh-background-plugin-0.1.9.tgz
@@ -194,7 +194,7 @@ If you are talking to an agent inside the desktop app, paste this prompt:
 > Requirements:
 >
 > 1. Determine the running DSH version and the profile directory the desktop app actually uses.
-> 2. Match the lines: DSH `0.2.x` → plugin `0.2.1` into the `desktop` profile; DSH `0.1.x` → plugin `0.1.9` into the `web` profile plus the allowlist step.
+> 2. Match the lines: DSH `0.2.x` → plugin `0.2.2` into the `desktop` profile; DSH `0.1.x` → plugin `0.1.9` into the `web` profile plus the allowlist step.
 > 3. Clone the repo, `pnpm pack` if needed, and install into the target profile.
 > 4. Verify the plugin landed in **both** that profile's `dependencies` and its `dsh.profile.bundles`.
 > 5. `0.2.x` needs no allowlist — do **not** run `expose-namespace.mjs` there; `0.1.x` does.
@@ -219,10 +219,10 @@ pnpm pack --pack-destination .
 
 ```bash
 # Desktop (DSH 0.2.x)
-dsh plugin --profile desktop add ./awesome-dsh-background-plugin-0.2.1.tgz
+dsh plugin --profile desktop add ./awesome-dsh-background-plugin-0.2.2.tgz
 
 # Web (DSH 0.2.x)
-dsh plugin --profile web add ./awesome-dsh-background-plugin-0.2.1.tgz
+dsh plugin --profile web add ./awesome-dsh-background-plugin-0.2.2.tgz
 ```
 
 On the desktop, use the CLI bundled with the app (full path in Option B above).
@@ -251,7 +251,7 @@ Either way, go to **Settings → General → Background**.
 
 | Symptom | Fix |
 |---|---|
-| Desktop says `incompatible with dsh 0.2.x` | Wrong version line: `0.2.x` needs **0.2.1**, not 0.1.9 |
+| Desktop says `incompatible with dsh 0.2.x` | Wrong version line: `0.2.x` needs **0.2.2**, not 0.1.9 |
 | No "Background" row in the desktop Settings at all | ① the plugin went into another profile (desktop uses `desktop`); ② it was not enabled / the app was not restarted; ③ the version was rejected. Check Settings → Plugins |
 | Web (0.1.x): the toggle flips back to "disabled" after saving | Allowlist not applied: re-run `node scripts/expose-namespace.mjs` |
 | `pnpm not found` | Install pnpm: `npm install -g pnpm` (or `corepack enable`). Not needed for the in-app installer |
