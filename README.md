@@ -275,7 +275,8 @@ node scripts/expose-namespace.mjs <path-to>/@deepseek-ai/dsh-host-apiproxy/lib/i
   - 在 `settings.general.item` 插槽注册「背景」设置行，与官方设置项共用同一套持久化机制。
 - **背景层**：一个 `position: fixed; z-index: 0` 的图层（`#dsh-background-layer`），插在 `<body>` 最前面，始终位于页面最底层。背景激活时：
   - 把 `--dsw-alias-bg-base` 覆盖为 `transparent`，让对话主区、详情面板、布局框架透出背景；
-  - 额外清掉布局框架自身的填充（桌面端 Windows 外壳会用 `--dsw-specific-sidebar-fill` 给框架上色，且 `#root` 与框架之间隔着插槽根元素，因此这里用后代选择器而不是子代选择器）；
+  - 额外清掉布局框架**自身**的填充（桌面端 Windows 外壳会用 `--dsw-specific-sidebar-fill` 给框架上色，且 `#root` 与框架之间隔着插槽根元素，因此这里用后代选择器而不是子代选择器）；
+  - 但**保留**框架的 `::before`：Windows 下那个伪元素就是最上面那条标题栏（`[data-windows-titlebar] .BynINW_frame:before`），用的还是同一个 `--dsw-specific-sidebar-fill`，所以标题栏保持不透明、并自动跟随 DSH 的暗/亮主题（浅色 `#f9fafb` / 深色 `#1b1b1c`）。清掉它会让标题栏透出窗口的亚克力底，和右侧原生窗口按钮（DSH 自己维护为不透明）对不上；
   - 侧栏、消息气泡、输入框使用各自的专用变量，保持不透明，保证可读性与功能区分；
   - 通过 `createPortal` 渲染到 `<body>` 的下拉菜单（如消息「更多」菜单）保持原有定位与层级，点击不受影响。
 - **图片**：经 Canvas 压缩为 dataURL 后，通过本机 DSH 设置接口写入本地设置文档，不会发送给第三方图片服务。

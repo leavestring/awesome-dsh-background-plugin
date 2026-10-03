@@ -2,6 +2,22 @@
 
 All notable changes to this project are documented in this file.
 
+## [Unreleased]
+
+### Fixed
+- The Windows title bar is opaque and theme-correct again while a background is
+  active. The 0.2.1 fix cleared `[class*="_frame"]::before` together with the
+  frame box, but on Windows that pseudo-element *is* the caption / title-row
+  strip: `[data-windows-titlebar] .BynINW_frame:before` paints the top bar with
+  `background: var(--dsw-specific-sidebar-fill)` — the official theme token
+  documented as "Sidebar column and title-row background" (`#f9fafb` light,
+  `#1b1b1c` dark). Clearing it made the top bar see-through onto the window's
+  acrylic backdrop, so the strip no longer matched the native window-button
+  block (which DSH keeps opaque and theme-aware through the
+  `dsh-desktop:windows-appearance` IPC). That rule is now gone; only the frame
+  box itself is cleared, which is what reveals the background in the content
+  area. Sidebar, title bar and window controls keep their own surfaces.
+
 ## [0.2.1] - 2026-09-29
 
 ### Fixed

@@ -278,6 +278,7 @@ Either way, go to **Settings → General → Background**.
 - **The background layer**: a `position: fixed; z-index: 0` layer (`#dsh-background-layer`) prepended to `<body>`, pinned to the very bottom of the page. While active:
   - `--dsw-alias-bg-base` is overridden to `transparent` so the conversation pane, details panel and layout frame reveal the background;
   - the layout frame's own fill is cleared as well — on Windows the desktop shell paints it with `--dsw-specific-sidebar-fill`, and DSH nests the frame under a slot-root element, so the rule uses a descendant combinator rather than a child combinator;
+  - but the frame's `::before` is **kept**: on Windows that pseudo-element *is* the title bar (`[data-windows-titlebar] .BynINW_frame:before`), painted with the same `--dsw-specific-sidebar-fill`, so the top bar stays opaque and follows the active DSH theme automatically (`#f9fafb` light / `#1b1b1c` dark). Clearing it let the window's acrylic backdrop bleed through and made the strip disagree with the native window controls, which DSH keeps opaque;
   - the sidebar, message bubbles and composer use their own dedicated variables and stay opaque for readability;
   - dropdowns rendered via `createPortal` into `<body>` (e.g. the message "more" menu) keep their original positioning and stacking, so clicks keep working.
 - **Images** are compressed to a data URL by Canvas and written through the local DSH settings API; nothing is uploaded anywhere.
